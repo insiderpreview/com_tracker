@@ -1,6 +1,6 @@
 <?php
 /**
- * @version			2.5.13-dev
+ * @version			2.5.14-dev
  * @package			Joomla
  * @subpackage	com_tracker
  * @copyright		Copyright (C) 2007 - 2012 Hugo Carvalho (www.visigod.com). All rights reserved.
@@ -16,8 +16,8 @@ JHtml::_('behavior.formvalidation');
 $params = JComponentHelper::getParams( 'com_tracker' );
 
 $doc = JFactory::getDocument();
-$doc->addScript($params->get('jquery_url'));
-$doc->addScript($params->get('jquery_ui_url'));
+//$doc->addScript($params->get('jquery_url'));
+//$doc->addScript($params->get('jquery_ui_url'));
 $jquery_drag_style='span.choosable {border: 1px solid red;}';
 $doc->addStyleDeclaration($jquery_drag_style);
 $style = '.hide { display:none; }';

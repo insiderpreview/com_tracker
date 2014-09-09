@@ -1,6 +1,6 @@
 <?php
 /**
- * @version			2.5.13-dev
+ * @version			2.5.14-dev
  * @package			Joomla
  * @subpackage	com_tracker
  * @copyright		Copyright (C) 2007 - 2012 Hugo Carvalho (www.visigod.com). All rights reserved.
@@ -69,7 +69,7 @@ class TrackerModelTorrent extends JModelAdmin {
 				
 				if ($image_file) {
 					// Delete the image
-					@unlink (JPATH_SITE.DS.'images/tracker/torrent_image/'.$itemId.'_'.$image_file);
+					@unlink (JPATH_SITE.'/images/tracker/torrent_image/'.$itemId.'_'.$image_file);
 				}
 			}
 		}

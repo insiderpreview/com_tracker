@@ -1,6 +1,6 @@
 <?php
 /**
- * @version			2.5.13-dev
+ * @version			2.5.14-dev
  * @package			Joomla
  * @subpackage	com_tracker
  * @copyright		Copyright (C) 2007 - 2012 Hugo Carvalho (www.visigod.com). All rights reserved.
@@ -17,7 +17,8 @@ class TrackerModelRSS extends JModelList {
 
 	protected $_context = 'com_tracker.rss';
 
-	protected function populateState() {
+	//protected function populateState() {
+	protected function populateState($ordering = null, $direction = null) {
 		$app = JFactory::getApplication();
 
 		// Load the rss id from the request.

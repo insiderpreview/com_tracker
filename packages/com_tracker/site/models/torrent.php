@@ -1,6 +1,6 @@
 <?php
 /**
- * @version			2.5.13-dev
+ * @version			2.5.14-dev
  * @package			Joomla
  * @subpackage	com_tracker
  * @copyright		Copyright (C) 2007 - 2012 Hugo Carvalho (www.visigod.com). All rights reserved.
@@ -169,10 +169,12 @@ class TrackerModelTorrent extends JModelItem {
 		$data->hitrunners = $db->loadObjectList();
 
 		// Get the default country and flagpic
+		if (!$params->get('defaultcountry')) $default_country = '170';
+		else $default_country = $params->get('defaultcountry'); 
 		$query->clear();
 		$query->select('tc.name as name, tc.image as image');
 		$query->from('#__tracker_countries AS tc');
-		$query->where('tc.id = '.$params->get('defaultcountry'));
+		$query->where('tc.id = '.$default_country);
 		$db->setQuery($query);
 		$data->default_country = $db->loadObjectList();
 

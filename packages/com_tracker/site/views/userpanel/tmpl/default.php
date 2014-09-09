@@ -1,6 +1,6 @@
 <?php
 /**
- * @version			2.5.13-dev
+ * @version			2.5.14-dev
  * @package			Joomla
  * @subpackage	com_tracker
  * @copyright		Copyright (C) 2007 - 2012 Hugo Carvalho (www.visigod.com). All rights reserved.
@@ -45,6 +45,7 @@ jQuery.noConflict();
 	<?php if ($this->params->get('enable_countries')) {
 			if (empty($this->item->country_info->name)) {
 				$this->item->default_country = TrackerHelper::getCountryDetails($this->params->get('defaultcountry'));
+				$this->item->country_info = new JObject;
 				$this->item->country_info->name = $this->item->default_country->name; 
 				$this->item->country_info->image = $this->item->default_country->image;
 			}
@@ -180,11 +181,11 @@ jQuery.noConflict();
 				<td class="row0" align="left">
 		 			<?php if ($this->item->tracker_info->torrent_pass_version) { ?>
 		 				&nbsp;<b><?php echo $this->item->tracker_info->torrent_pass_version; ?></b>&nbsp;-&nbsp;
-		 				<a href='<?php echo JRoute::_("index.php?option=com_tracker&task=user.resetpassversion&id=".$this->item->id); ?>'><?php echo JText::_( 'COM_TRACKER_RESET_TORRENT_PASS' );?></a>
+		 				<a href='<?php echo JRoute::_("index.php?option=com_tracker&task=userpanel.resetpassversion&id=".$this->item->id); ?>'><?php echo JText::_( 'COM_TRACKER_RESET_TORRENT_PASS' );?></a>
 		 			<?php 
 		 			} else { ?>
-		 				&nbsp;<b>No torrent pass version yet</b>&nbsp;-&nbsp;
-		 				<a href='<?php echo JRoute::_("index.php?option=com_tracker&task=user.resetpassversion&id=".$this->item->id); ?>'><?php echo JText::_( 'COM_TRACKER_CREATE_TORRENT_PASS' );?></a>
+		 				&nbsp;<b><?php echo JText::_( 'COM_TRACKER_TORRENT_PASS_NONE' ); ?></b>&nbsp;-&nbsp;
+		 				<a href='<?php echo JRoute::_("index.php?option=com_tracker&task=userpanel.resetpassversion&id=".$this->item->id); ?>'><?php echo JText::_( 'COM_TRACKER_CREATE_TORRENT_PASS' );?></a>
 		 			<?php } ?>
 				</td>
 			</tr>

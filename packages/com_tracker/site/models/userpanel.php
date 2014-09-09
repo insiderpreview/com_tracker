@@ -1,6 +1,6 @@
 <?php
 /**
- * @version			2.5.13-dev
+ * @version			2.5.14-dev
  * @package			Joomla
  * @subpackage	com_tracker
  * @copyright		Copyright (C) 2007 - 2012 Hugo Carvalho (www.visigod.com). All rights reserved.
@@ -275,7 +275,7 @@ class TrackerModelUserpanel extends JModelItem {
 		}
 
 		// Get SEF status
-		$config =& JFactory::getConfig();
+		$config = JFactory::getConfig();
 		// If its on we dont add the view name, if its off we add it
 		if ($config->getValue( 'sef' ) == 1) $app->redirect(JRoute::_('index.php?option=com_tracker'), JText::_('COM_TRACKER_CHANGE_TORRENT_PASS_VERSION_OK'), 'notice');
 			else $app->redirect(JRoute::_('index.php?option=com_tracker&view=userpanel'.$view), JText::_('COM_TRACKER_CHANGE_TORRENT_PASS_VERSION_OK'), 'notice');

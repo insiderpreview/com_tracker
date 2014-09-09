@@ -1,6 +1,6 @@
 <?php
 /**
- * @version			2.5.13-dev
+ * @version			2.5.14-dev
  * @package			Joomla
  * @subpackage	com_tracker
  * @copyright		Copyright (C) 2007 - 2012 Hugo Carvalho (www.visigod.com). All rights reserved.
@@ -570,12 +570,17 @@ abstract class TrackerHelper {
 		try {
 			$default_country = $db->loadNextObject();
 		} catch (Exception $e) {
-			// $this->setError(JText::_( 'COM_TRACKER_CANT_GET_DEFAULT_COUNTRY'));
 			jimport('joomla.log.log');
 			JLog::add(JText::_('COM_TRACKER_CANT_GET_DEFAULT_COUNTRY'), JLog::NOTICE);
-
 			return false;
 		}
+
+		if (empty($default_country)) {
+			$default_country = new JObject;
+			$default_country->name = JText::_( 'JNONE' );
+			$default_country->image = 'images/tracker/flags/unknown.png' ;
+		}
+
 		return $default_country;
 	}
 

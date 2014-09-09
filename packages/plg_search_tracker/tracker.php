@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		2.5.13-dev
+ * @version		2.5.14-dev
  * @package		Joomla.Plugin
  * @subpackage	Search.tracker
  * @copyright	Copyright (C) 2007 - 2013 Hugo Carvalho (www.visigod.com). All rights reserved.
@@ -92,7 +92,7 @@ class plgSearchTracker extends JPlugin {
 				. ' CONCAT_WS( " / ", '. $db->Quote($searchTracker) .', b.title ) AS section,'
 				. ' "1" AS browsernav'
 				. ' FROM #__tracker_torrents AS t'
-				. ' INNER JOIN #__categories AS b ON b.extension = "com_tracker" AND b.id = t.categoryID'
+				. ' INNER JOIN #__categories AS b ON b.extension = "com_tracker"'
 				. ' WHERE ( '. $where .' )'
 				. ' AND t.flags <> 1'
 				. ' GROUP BY t.fid'
