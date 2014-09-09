@@ -252,10 +252,11 @@ jQuery(document).ready(function(){
 						<?php
 							if (empty($this->item->tags)) echo JText::_( 'COM_TRACKER_NO_TORRENT_TAGS' );
 							else {
-								$Tags = explode(", ", $this->item->tags);
+								$Tags = explode(" ", $this->item->tags);
+								$Tags = preg_replace('/[^A-Za-z0-9\-\_]/', '', $Tags);
 								$totalTags = count($Tags);
 								for ($i=0; $i < $totalTags; $i++) {
-									echo '<a href="'.JRoute::_('index.php?view=torrents&tag='.$Tags[$i]).'">'.$Tags[$i].'</a>';
+									echo '<a href="'.JRoute::_('index.php?view=torrents&filter-search='.$Tags[$i]).'">'.$Tags[$i].'</a>';
 									if ($i < $totalTags - 1) echo ', ';
 								}
 							}
@@ -269,16 +270,14 @@ jQuery(document).ready(function(){
 			<?php if ($params->get('use_image_file')) { ?>
 			<?php 
 				$reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
-
 				// If we dont have a link in the field
-				if(!preg_match($reg_exUrl, $this->item->image_file)) {
-					if (file_exists($_SERVER['DOCUMENT_ROOT'].JURI::base(true).'/images/tracker/torrent_image/'.$this->item->image_file)) {
+				if(!preg_match($reg_exUrl, $this->item->image_file)) :
+					if (file_exists($_SERVER['DOCUMENT_ROOT'].JURI::base(true).'/images/tracker/torrent_image/'.$this->item->image_file) && !empty($this->item->image_file)) :
 						$this->item->image_file = JURI::base().'images/tracker/torrent_image/'.$this->item->image_file;
-					} else  {
-						$this->item->image_file = JURI::base().$params->get('default_image_file');
-					}
-				}
-				
+					else :
+						$this->item->image_file = JURI::base().$this->params->get('default_image_file');
+					endif;
+				endif;
 			?>
 			<td valign="middle">
 				<a href="<?php echo $this->item->image_file; ?>" class="modal" >
@@ -345,21 +344,20 @@ jQuery(document).ready(function(){
 		<!-- File List -->
 		<tr>
 			<td style="width: 70%;" valign="top">
-				<table
-					style="cellpadding: 0; cellspacing: 0; border: 0; width: 100%;">
+				<table style="cellpadding: 0; cellspacing: 0; border: 0; width: 100%;">
 					<tr class="row1">
 						<td>&nbsp;<b><?php echo JText::_( 'COM_TRACKER_TORRENT_FILENAME' );?>&nbsp;</b></td>
 						<?php if ($params->get('enable_filetypes') == 1) { ?>
-						<td nowrap align="center">&nbsp;<b><?php echo JText::_( 'COM_TRACKER_TORRENT_FILETYPE' );?>&nbsp;</b></td>
+							<td nowrap align="center">&nbsp;<b><?php echo JText::_( 'COM_TRACKER_TORRENT_FILETYPE' );?>&nbsp;</b></td>
 						<?php } ?>
 						<td align="right">&nbsp;<b><?php echo JText::_( 'COM_TRACKER_TORRENT_SIZE' );?>&nbsp;</b></td>
 					</tr>
 					<tr>
-					<?php if ($params->get('enable_filetypes') == 1) { ?>
-						<td colspan="3"><hr /></td>
-					<?php } else { ?>
-						<td colspan="2"><hr /></td>
-					<?php } ?>
+						<?php if ($params->get('enable_filetypes') == 1) { ?>
+							<td colspan="3"><hr /></td>
+						<?php } else { ?>
+							<td colspan="2"><hr /></td>
+						<?php } ?>
 					</tr>
 					<?php
 					$k = 0;

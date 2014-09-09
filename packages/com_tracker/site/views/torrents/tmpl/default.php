@@ -32,12 +32,12 @@ $torrentType = array(
 <form action="<?php echo JRoute::_('index.php?view=torrents'); ?>" method="post" name="adminForm">
 	<fieldset id="filter-bar">
 		<?php if ($this->params->get('tl_search_bar')) { ?>
-		<div class="filter-search fltlft" style="width:50%; float:left;">
-			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('Search'); ?>" />
-			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
-		</div>
+			<div class="filter-search fltlft" style="width:50%; float:left;">
+				<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
+				<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" title="<?php echo JText::_('Search'); ?>" />
+				<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+				<button type="button" onclick="document.id('filter-search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			</div>
 		<?php } ?>
 
 		<?php if ($this->params->get('tl_category_dropdown')) { ?>

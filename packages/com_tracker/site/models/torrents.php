@@ -53,29 +53,7 @@ class TrackerModelTorrents extends JModelList {
 	protected function populateState($ordering = null, $direction = null) {
 		// Initialise variables.
 		$app = JFactory::getApplication();
-		$component = JComponentHelper::getComponent( 'com_tracker' );
-		
-		$params = new JParameter( $component->params );
 
-		/*
-		$menuitemid = JRequest::getInt( 'Itemid' );
-		$menu = JSite::getMenu();
-		if ($menuitemid) {
-			$menuparams = $menu->getParams( $menuitemid );
-			$params->merge( $menuparams );
-		}
-		*/
-
-		$this->setState('params', $params);
-
-		if ($params->get('torrent_tags')) $search = JRequest::getVar('tag');
-		else $search = '';
-
-		// Load the filter state.
-		$search .= $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
-		//Omit double (white-)spaces and set state
-		$this->setState('filter.search', preg_replace('/\s+/',' ', $search));
-		
 		// List state information
 		$value = JRequest::getUInt('limit', $app->getCfg('list_limit', 0));
 		$this->setState('list.limit', $value);
@@ -98,6 +76,8 @@ class TrackerModelTorrents extends JModelList {
 		$filteredCategoryId = $this->getUserStateFromRequest('com_tracker.filter.category_id', 'filter_category_id', 0, 'uint', false);
 		$this->setState('filter.category_id', $filteredCategoryId);
 
+		$component = JComponentHelper::getComponent( 'com_tracker' );
+		$params = new JParameter( $component->params );
 		if ($params->get('enable_licenses')) {
 			$filteredLicenseId = $this->getUserStateFromRequest('com_tracker.filter.license_id', 'filter_license_id', 0, 'uint', false);
 			$this->setState('filter.license_id', $filteredLicenseId);
@@ -105,6 +85,9 @@ class TrackerModelTorrents extends JModelList {
 
 		$filteredTorrentStatus = $this->getUserStateFromRequest('com_tracker.filter.torrent_status', 'filter_torrent_status', 0, 'uint', false);
 		$this->setState('filter.torrent_status', $filteredTorrentStatus);
+
+		// Optional filter text
+		$this->setState('list.filter', $app->input->getString('filter-search'));
 
 		// List state information.
 		parent::populateState('t.fid', 'desc');
@@ -155,8 +138,7 @@ class TrackerModelTorrents extends JModelList {
 
 		//**********************************************************************************************************
 		// Filter by search in title
-		$search = $this->getState('filter.search');
-
+		$search = $this->getState('list.filter');
 		if (!empty($search)) {
 			if (stripos($search, 'id:') === 0) {
 				$query->where('t.fid = '.(int) substr($search, 3));
